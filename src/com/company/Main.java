@@ -18,21 +18,19 @@ public class Main
         UserRegistry.getInstance().addUser(admin);
         System.out.println("Admin userid: " + admin.getUserId());
 
-        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-        while (true) {
-            System.out.print("Enter command: ");
-            try
+        try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+             BufferedReader reader = new BufferedReader(inputStreamReader)) {
+            while (true)
             {
+                System.out.print("Enter command: ");
                 String line = reader.readLine();
                 CLICommand.execute(line);
             }
-            catch (IOException e)
-            {
-                System.out.println("Failed to read input");
-                System.exit(1);
-            }
-
+        }
+        catch (IOException e)
+        {
+            System.out.println("Encountered error while getting input from user");
+            System.exit(1);
         }
     }
 }
